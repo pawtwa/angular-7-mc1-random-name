@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
   constructor(private randomNameService: RandomNameService) {}
 
   ngOnInit(): void {
-    this.randomNameService.getNamesJSON().toPromise().then(data => {
+    this.randomNameService.getNamesJSONasPromise().then(data => {
+    // this.randomNameService.getNamesJSONasObservable().toPromise().then(data => {
       if (Array.isArray(data)) {
         const randomNumber = Math.floor(Math.random() * data.length);
         if (randomNumber >= 0 && randomNumber < data.length) {
