@@ -68,7 +68,8 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.randomNameService.getNamesJSON().toPromise().then(function (data) {
+        this.randomNameService.getNamesJSONasPromise().then(function (data) {
+            // this.randomNameService.getNamesJSONasObservable().toPromise().then(data => {
             if (Array.isArray(data)) {
                 var randomNumber = Math.floor(Math.random() * data.length);
                 if (randomNumber >= 0 && randomNumber < data.length) {
@@ -165,8 +166,17 @@ var RandomNameService = /** @class */ (function () {
     function RandomNameService(http) {
         this.http = http;
     }
-    RandomNameService.prototype.getNamesJSON = function () {
+    RandomNameService.prototype.getNamesJSONasObservable = function () {
         return this.http.get('./assets/names.json');
+    };
+    RandomNameService.prototype.getNamesJSONasPromise = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get('./assets/names.json')
+                .subscribe(function (data) {
+                resolve(data);
+            });
+        });
     };
     RandomNameService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
